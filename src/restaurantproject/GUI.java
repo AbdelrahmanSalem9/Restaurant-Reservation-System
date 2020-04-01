@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -44,6 +45,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -68,6 +70,10 @@ public class GUI {
         label2.setFont(Font.font("ariel", 12));
         Button button1 = new Button("Log in");
         button1.setFont(Font.font("ariel", 12));
+        Label label3 = new Label("First time here?");
+        label3.setFont(Font.font("ariel", 12));
+        Button button2 = new Button("New Client");
+        button2.setFont(Font.font("ariel", 12));
         TextField textfield1 = new TextField();
         PasswordField textfield2 = new PasswordField();
         GridPane grid = new GridPane();
@@ -77,10 +83,13 @@ public class GUI {
         grid.add(button1, 1, 3);
         grid.add(textfield1, 1, 1);
         grid.add(textfield2, 1, 2);
+        grid.add(label3, 0, 4);
+        grid.add(button2, 1, 4);
         grid.setAlignment(Pos.CENTER);
         grid.setVgap(10);
         grid.setHgap(10);
         GridPane.setHalignment(button1, HPos.CENTER);
+        GridPane.setHalignment(button2, HPos.CENTER);
         GridPane.setHalignment(text, HPos.CENTER);
         error.setTitle("Error");
         Text errormsg = new Text("Incorrect Username or Password");
@@ -100,7 +109,12 @@ public class GUI {
         grid2.setAlignment(Pos.CENTER);
         Scene sceneError = new Scene(grid2, 200, 100);
         error.setScene(sceneError);
-
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                prepareNewUser();
+            }
+        });
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -138,7 +152,7 @@ public class GUI {
 
     }
 
-    public Scene getScene0() {
+    public Scene getScene() {
         return this.scene1;
     }
 
@@ -197,7 +211,7 @@ public class GUI {
                     errorMessage("Enter a correct time");
                 } else {
                     try {
-                        if (xml.getClient().checkAva(Integer.parseInt(time.getText()), Integer.parseInt(numberOfSeats.getValue()), smoking.isSelected(), xml.getR())) {
+                        if (xml.getClient().checkAvailableTable(Integer.parseInt(time.getText()), Integer.parseInt(numberOfSeats.getValue()), smoking.isSelected(), xml.getR())) {
                             prepareMenu();
                         } else {
                             errorMessage("No Table Is Available");
@@ -333,7 +347,7 @@ public class GUI {
         grid.add(logout, 4, 4);
         grid.add(exit, 4, 5);
         list.setFont(Font.font("ariel", 14));
-        Order order = new Order();
+
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -354,9 +368,13 @@ public class GUI {
                 if (xml.getClient().getReserve().getOrder().getTotalPrice() == 0) {
                     errorMessage("No Order Entered");
                 } else {
-                    xml.saveR(xml.getClient().getReserve());
                     try {
-                        xml.write(xml.getR());
+                        xml.getR().addResevation(xml.getClient().getReserve());
+                    } catch (JAXBException ex) {
+                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        xml.write();
                     } catch (JAXBException ex) {
                         Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -554,7 +572,7 @@ public class GUI {
         Button view = new Button("View Reservation");
         view.setTextFill(Paint.valueOf("white"));
         view.setStyle("-fx-background-color: #000000	; ");
-        TextArea reservationList = new TextArea(xml.getWaiter().viewReservation(xml.getR())); // return formatted string
+        TextArea reservationList = new TextArea(xml.getWaiter().viewReservations(xml.getR())); // return formatted string
         reservationList.setPrefColumnCount(24);
         reservationList.setPrefRowCount(24);
         reservationList.setEditable(false);
@@ -622,7 +640,7 @@ public class GUI {
         viewOrders.setStyle("-fx-background-color: #000000	; ");
         Text text = new Text("Orders List");
         text.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 22));
-        TextArea ordersList = new TextArea(xml.getCooker().viewOrders(xml.getR()));
+        TextArea ordersList = new TextArea(xml.getCooker().viewReservations(xml.getR()));
         ordersList.setEditable(false);
         ordersList.setPrefColumnCount(24);
         ordersList.setPrefRowCount(24);
@@ -783,5 +801,105 @@ public class GUI {
 
             }
         });
+    }
+
+    public void prepareNewUser() {
+        //scene 1
+        Text text = new Text("Client Sign up Form:");
+        text.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        text.setTextAlignment(TextAlignment.CENTER);
+        Label label1 = new Label("Name:");
+        label1.setFont(Font.font("ariel", 12));
+        Label error = new Label();
+        error.setTextAlignment(TextAlignment.CENTER);
+        error.setVisible(false);
+        label1.setFont(Font.font("ariel", 12));
+        Label label2 = new Label("Username:");
+        label2.setFont(Font.font("ariel", 12));
+        Label label3 = new Label("Password:");
+        label3.setFont(Font.font("ariel", 12));
+        Button button1 = new Button("Sign up");
+        button1.setFont(Font.font("ariel", 12));
+        TextField textfield1 = new TextField();
+        TextField textfield2 = new TextField();
+        PasswordField textfield3 = new PasswordField();
+        GridPane grid = new GridPane();
+        grid.add(text, 1, 0);
+        grid.add(label1, 0, 1);
+        grid.add(label2, 0, 2);
+        grid.add(label3, 0, 3);
+        grid.add(textfield1, 1, 1);
+        grid.add(textfield2, 1, 2);
+        grid.add(textfield3, 1, 3);
+        grid.add(button1, 1, 4);
+        grid.add(error, 1, 5);
+        grid.setAlignment(Pos.CENTER);
+        grid.setVgap(10);
+        grid.setHgap(10);
+        GridPane.setHalignment(text, HPos.CENTER);
+        GridPane.setHalignment(button1, HPos.CENTER);
+        GridPane.setHalignment(error, HPos.CENTER);
+        Scene scene = new Scene(grid, 300, 300);
+        Main.getWindow().setScene(scene);
+        
+        //scene 
+        Text text2 = new Text("Thank you for registering");
+        text2.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        text2.setTextAlignment(TextAlignment.CENTER);
+        Button backTo=new Button("Log in");
+        Button exit=new Button("Exit");
+        GridPane grid2=new GridPane();
+        grid2.add(text2,1,0);
+        grid2.add(backTo,1,1);
+        grid2.add(exit,1,1);
+        GridPane.setHalignment(backTo,HPos.LEFT);
+        GridPane.setHalignment(backTo,HPos.RIGHT);
+        grid2.setAlignment(Pos.CENTER);
+        Scene scene2=new Scene(grid2,400,300);
+        backTo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               Main.getWindow().setScene(getScene());
+                
+            }});
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.getWindow().close();
+            }});
+        
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    if (textfield1.getText().length()==0 || textfield2.getText().length()==0 || textfield3.getText().length()==0) {
+                        errorMessage("Enter Required Fields");
+
+                    } else if (!logic.checkName(textfield1.getText())) {
+                        error.setText("This is not a valid name\nNames don't contain numbers\n or special characters");
+                        error.setVisible(true);
+                    } else if (!logic.checkSpaces(textfield2.getText())) {
+                        error.setText("Username don't contain spaces");
+                        error.setVisible(true);
+                    } else if (!logic.checkUsername(xml.getR().getUsers(), textfield2.getText())) {
+                        error.setText("Username already taken");
+                        error.setVisible(true);
+
+                    } else if (!logic.checkPassword(textfield3.getText())) {
+                        error.setText("Password must be more than\n8 characters");
+                        error.setVisible(true);
+
+                    } else {
+                        xml.getR().addClient(textfield1.getText(), textfield2.getText(), textfield3.getText());
+                        xml.write();
+                        Main.getWindow().setScene(scene2);
+                        
+                    }
+                } catch (JAXBException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            }});
+
     }
 }

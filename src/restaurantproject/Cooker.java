@@ -16,10 +16,14 @@ public class Cooker extends User{
 		
 	
 
-	public String viewOrders(Restaurant restaurant){
+	public String viewReservations(Restaurant restaurant){
 
 		String orders = "";
-                
+                 if(restaurant.getReservation().isEmpty())
+           {
+               orders+="No Reservations made";
+           }
+           else{
 		
 		Collections.sort(restaurant.getReservation());
 	
@@ -35,7 +39,7 @@ public class Cooker extends User{
 				for(OrderLine orderLine: r.getOrder().getOrderLines())
 				orders+=orderLine.getQuantity()+"  "+orderLine.getDish().getName()+"\n";
                             orders+="-------------------------\n";  
-		}
+		}}
 		return orders;	
 
 	}

@@ -15,6 +15,11 @@ public class Manager extends User{
     public String viewReservations(Restaurant restaurant){
 
 		String reservations = "";
+                 if(restaurant.getReservation().isEmpty())
+           {
+               reservations+="No Reservations made";
+           }
+           else{
 		
 		Collections.sort(restaurant.getReservation());
 	
@@ -32,7 +37,7 @@ public class Manager extends User{
 				reservations+=orderLine.getQuantity()+"\t"+orderLine.getDish().getName()+"\n";
                         reservations+="Total Amount Paid:"+r.getOrder().calculateWithTaxes()+"\n\n--------------------\n\n";
 				
-		}
+		}}
 		return reservations;	
 
 	}

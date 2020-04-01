@@ -74,7 +74,15 @@ public class Restaurant {
     {this.reservations.add(r);
         
     }
-   
+     public void addClient(String name,String username,String password)
+     {
+         User u=new Client();
+         u.setRole("Client");
+         u.setName(name);
+         u.setPassword(password);
+         u.setUsername(username);
+         this.users.add(u);
+     }
 
     
 }

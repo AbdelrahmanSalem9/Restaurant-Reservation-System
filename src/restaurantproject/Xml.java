@@ -24,7 +24,7 @@ public class Xml {
 
 
     public Restaurant getR() throws JAXBException {
-        
+        read();
         return r;
     }
 
@@ -110,15 +110,12 @@ public class Xml {
    
 
     
-    public void write(Restaurant ro) throws JAXBException
+    public void write() throws JAXBException
     {JAXBContext jaxbcontext = JAXBContext.newInstance(Restaurant.class);
         Marshaller marshaller=jaxbcontext.createMarshaller();
-        marshaller.marshal(ro, new File("input.xml"));
+        marshaller.marshal(this.r, new File("input.xml"));
         
     }
    
-    public void saveR(Reservation re)
-    {
-        r.addResevation(re);
-    }
+    
 }

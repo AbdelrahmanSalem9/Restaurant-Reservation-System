@@ -5,6 +5,9 @@
  */
 package restaurantproject;
 
+import static java.lang.Character.isLetter;
+import java.util.List;
+
 /**
  *
  * @author MIX
@@ -50,5 +53,42 @@ public class Logic {
         return s;
 
     }
+     
+     public boolean checkUsername(List<User> users,String username)
+     {
+         for(User u:users)
+         {
+             if(u.getUsername().equals(username))
+                 return false;
+         }
+         
+         return true;
+         
+     }
+     public boolean checkSpaces(String username)
+     {
+         if(username.contains(" "))
+             return false;
+         return true;
+     }
+     public boolean checkName(String name)
+     {
+         int i=0;
+         while(i<name.length()){
+         if(isLetter(name.charAt(i))||name.charAt(i)==' ')
+             i++;
+         else
+             return false;}
+         return true;
+         
+     }
+     public boolean checkPassword(String password)
+     {
+         if(password.length()<8)
+             return false;
+         
+             return true;
+     }
+   
     
 }

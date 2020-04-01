@@ -47,7 +47,7 @@ public class Main extends Application {
         window=primaryStage;
         GUI gui = new GUI();
         gui.prepareScene();
-        primaryStage.setScene(gui.getScene0());
+        primaryStage.setScene(gui.getScene());
         primaryStage.show();
 
     }

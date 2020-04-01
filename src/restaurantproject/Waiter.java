@@ -18,9 +18,13 @@ public class Waiter extends User {
 	
 	
 
-	public String viewReservation(Restaurant restaurant) {
+	public String viewReservations(Restaurant restaurant) {
            String reservation = "";
-		
+           if(restaurant.getReservation().isEmpty())
+           {
+               reservation+="No Reservations made";
+           }
+           else{
 		Collections.sort(restaurant.getReservation());
 		for (Reservation r : restaurant.getReservation()) {
 			if (r.getTime() == 10 || r.getTime() == 11)
@@ -30,7 +34,7 @@ public class Waiter extends User {
 				reservation += "Client Name: " + r.getNameOfCLient() + " " + "\nTable: " + r.getTable() + " "
 						+ "\nTime: " + r.getTime() + " PM" + "\n\n";
                         reservation+="---------------------\n";
-		}
+		}}
                 
 		return reservation;
 	}

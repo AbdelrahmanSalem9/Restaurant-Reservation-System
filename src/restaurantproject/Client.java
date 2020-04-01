@@ -36,7 +36,7 @@ public class Client extends User {
            }
     
 
-    public boolean checkAva(int time,int seats, boolean smoking, Restaurant r) {
+    public boolean checkAvailableTable(int time,int seats, boolean smoking, Restaurant r) {
         int found;
         for (Table table : r.getTables()) {
             found=0;
