@@ -5,12 +5,9 @@
  */
 package restaurantproject;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import javax.xml.bind.JAXBException;
 
 /**
@@ -25,21 +22,10 @@ public class Main extends Application {
         return window;
     }
 
-    public static void setWindow(Stage window) {
-        Main.window = window;
-    }
 
     public static void main(String args[]) throws JAXBException {
 
-       //InputStream in = Main.class.getResourceAsStream("file:///C:/Users/MIX/Documents/NetBeansProjects/RestaurantProject/input.xml");
-        Reader fileReader = null;
-
-        InputStream in = Main.class.getClassLoader().getResourceAsStream("/input.xml");
-        if (null != in) {
-            fileReader = new InputStreamReader(in);
-        }
-
-        launch(args);
+         launch(args);
     }
 
     @Override

@@ -14,14 +14,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author MIX
  */
-@XmlRootElement(name="dish")
+@XmlRootElement(name = "dish")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dish {
-    @XmlElement(name="name")
+
+    @XmlElement(name = "name")
     private String name;
-    @XmlElement(name="price")
+    @XmlElement(name = "price")
     private double price;
-    @XmlElement(name="type")
+    @XmlElement(name = "type")
     private String type;
 
     public String getName() {
@@ -47,7 +48,5 @@ public class Dish {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
-    
+
 }

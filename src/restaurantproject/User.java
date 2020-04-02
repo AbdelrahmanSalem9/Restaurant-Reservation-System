@@ -14,17 +14,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author MIX
  */
-@XmlRootElement(name ="user")
+@XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class User {
+
     @XmlElement(name = "name")
     private String name;
-     @XmlElement(name = "role")
+    @XmlElement(name = "role")
     private String role;
-      @XmlElement(name = "username")
+    @XmlElement(name = "username")
     private String username;
-       @XmlElement(name = "password")
+    @XmlElement(name = "password")
     private String password;
 
     public String getName() {
@@ -58,9 +59,16 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-       
-       
-    
-    
-    
+
+    public User() {
+
+    }
+
+    public User(String name, String role, String username, String password) {
+        this.name = name;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+    }
+
 }

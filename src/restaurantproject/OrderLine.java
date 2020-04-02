@@ -5,7 +5,6 @@
  */
 package restaurantproject;
 
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,9 +17,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrderLine {
-    @XmlElement(name="dish")
+
+    @XmlElement(name = "dish")
     private Dish dish;
-    @XmlElement(name="quantity")
+    @XmlElement(name = "quantity")
     private int quantity;
 
     public Dish getDish() {
@@ -38,12 +38,10 @@ public class OrderLine {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    
+
     @Override
-    public String toString()
-    {
-        return String.format("%-50s\t\t\t%-4.1f\t\t\t\t%-3d\n",dish.getName(),dish.getPrice(),quantity);
+    public String toString() {
+        return String.format("%-50s\t\t\t%-4.1f\t\t\t\t%-3d\n", dish.getName(), dish.getPrice(), quantity);
     }
-    
+
 }

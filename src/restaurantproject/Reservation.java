@@ -12,29 +12,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "reservation")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Reservation implements Comparable<Reservation>{
+public class Reservation implements Comparable<Reservation> {
 
-   
     @XmlElement(name = "tableNumber")
     private int tableNumber;
     @XmlElement(name = "Order")
     private Order order = new Order();
     @XmlElement(name = "nameOfClient")
     private String nameOfCLient;
-    @XmlElement(name="time")
+    @XmlElement(name = "time")
     private int time;
 
     public int getTime() {
         return time;
     }
-    
-    public void setTime(int time)
-    {
-        this.time=time;
+
+    public void setTime(int time) {
+        this.time = time;
     }
- public void setOrder(Order order) {
+
+    public void setOrder(Order order) {
         this.order = order;
     }
+
     public Order getOrder() {
         return order;
     }
@@ -55,26 +55,25 @@ public class Reservation implements Comparable<Reservation>{
         this.tableNumber = table;
     }
 
-	@Override
-	public int compareTo(Reservation o) {
-		if (time == 10 || time == 11 || time == 12)
-                {if(time<o.time)
-                   return 1;
-                else if(time>o.time)
-                    return -1;
-               
-                         
-                }
-                else
-                {
-                    if(time<o.time)
-                        return -1;
-                    else if(time>o.time)
-                        return 1;
-                    
-                }
+    @Override
+    public int compareTo(Reservation o) {
+        if (time == 10 || time == 11 || time == 12) {
+            if (time < o.time) {
+                return 1;
+            } else if (time > o.time) {
+                return -1;
+            }
 
-		return 0;
-	}
+        } else {
+            if (time < o.time) {
+                return -1;
+            } else if (time > o.time) {
+                return 1;
+            }
+
+        }
+
+        return 0;
+    }
 
 }

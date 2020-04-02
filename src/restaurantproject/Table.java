@@ -14,14 +14,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author MIX
  */
-@XmlRootElement(name="table")
+@XmlRootElement(name = "table")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Table {
-    @XmlElement(name="number")
+
+    @XmlElement(name = "number")
     private int number;
-    @XmlElement(name="number_of_seats")
+    @XmlElement(name = "number_of_seats")
     private int seats;
-    @XmlElement(name="smoking")
+    @XmlElement(name = "smoking")
     private boolean smoking;
 
     public int getNumber() {
@@ -47,6 +48,5 @@ public class Table {
     public void setSmoking(boolean smoking) {
         this.smoking = smoking;
     }
-    
-    
+
 }

@@ -5,12 +5,8 @@
  */
 package restaurantproject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,8 +20,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "restaurant")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Restaurant {
-    @XmlElementWrapper(name="users")
-    @XmlElement(name ="user")
+
+    @XmlElementWrapper(name = "users")
+    @XmlElement(name = "user")
     private List<User> users;
 
     public List<User> getUsers() {
@@ -36,8 +33,8 @@ public class Restaurant {
         this.users = users;
     }
 
-    @XmlElementWrapper(name ="dishes")
-    @XmlElement(name="dish")
+    @XmlElementWrapper(name = "dishes")
+    @XmlElement(name = "dish")
     private List<Dish> dishes;
 
     public List<Dish> getDishes() {
@@ -47,9 +44,9 @@ public class Restaurant {
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
     }
-    
-    @XmlElementWrapper(name="tables")
-     @XmlElement(name="table")
+
+    @XmlElementWrapper(name = "tables")
+    @XmlElement(name = "table")
     private List<Table> tables;
 
     public List<Table> getTables() {
@@ -59,9 +56,9 @@ public class Restaurant {
     public void setTables(List<Table> tables) {
         this.tables = tables;
     }
-@XmlElementWrapper(name="reservations")
-   @XmlElement(name = "reservation")
-    private List<Reservation> reservations=new ArrayList<>();
+    @XmlElementWrapper(name = "reservations")
+    @XmlElement(name = "reservation")
+    private List<Reservation> reservations = new ArrayList<>();
 
     public List<Reservation> getReservation() {
         return reservations;
@@ -70,19 +67,15 @@ public class Restaurant {
     public void setReservation(List<Reservation> reservation) {
         this.reservations = reservation;
     }
-     public void addResevation(Reservation r)
-    {this.reservations.add(r);
-        
-    }
-     public void addClient(String name,String username,String password)
-     {
-         User u=new Client();
-         u.setRole("Client");
-         u.setName(name);
-         u.setPassword(password);
-         u.setUsername(username);
-         this.users.add(u);
-     }
 
-    
+    public void addResevation(Reservation r) {
+        this.reservations.add(r);
+
+    }
+
+    public void addClient(String name, String username, String password) {
+        User u = new User(name, "Client", username, password);
+        this.users.add(u);
+    }
+
 }

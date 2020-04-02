@@ -7,16 +7,12 @@ package restaurantproject;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -27,17 +23,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import static javafx.scene.paint.Color.color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -45,7 +37,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -59,8 +50,9 @@ public class GUI {
     Scene scene1;
     Scene scene;
     Stage error = new Stage();
-
+//login form
     public void prepareScene() {
+        //drawing the scene
         Text text = new Text("Login Form:");
         text.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 15));
         text.setTextAlignment(TextAlignment.CENTER);
@@ -109,6 +101,7 @@ public class GUI {
         grid2.setAlignment(Pos.CENTER);
         Scene sceneError = new Scene(grid2, 200, 100);
         error.setScene(sceneError);
+        //buttons events
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -122,9 +115,10 @@ public class GUI {
                     if (!xml.login(textfield1.getText(), textfield2.getText())) {
                         error.show();
                     } else {
+                        //determining the which scene to call
                         switch (xml.getType()) {
                             case 1:
-                                prepareCustomer();
+                                prepareClient();
                                 break;
                             case 2:
                                 prepareWaiter();
@@ -155,15 +149,15 @@ public class GUI {
     public Scene getScene() {
         return this.scene1;
     }
-
-    public void prepareCustomer() throws NumberFormatException, JAXBException, FileNotFoundException {
+//Client scene
+    public void prepareClient() throws NumberFormatException, JAXBException, FileNotFoundException {
+        //drawing the scene
         Image image = new Image(new FileInputStream("background.jpg"));
         BackgroundImage backgroundimage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-
         Background background = new Background(backgroundimage);
         Label welcomeLabel = new Label("Welcome " + xml.getUser().getName());
         welcomeLabel.setFont(Font.font("ariel", FontWeight.BOLD, 20));
@@ -173,7 +167,6 @@ public class GUI {
         numberOfSeats.getItems().addAll("4", "5", "6", "7", "12");
         ComboBox<String> amPm = new ComboBox<>();
         amPm.getItems().addAll("AM", "PM");
-
         numberOfSeats.setPromptText("Choose Number of Seats");
         CheckBox smoking = new CheckBox();
         smoking.setMaxWidth(50);
@@ -204,7 +197,7 @@ public class GUI {
         grid.setHgap(10);
         grid.setAlignment(Pos.CENTER);
         grid.setBackground(background);
-
+//buttons functions
         proceedButton.setOnAction(e -> {
             try {
                 if (!logic.checkTime(time.getText(), amPm.getValue())) {
@@ -230,7 +223,7 @@ public class GUI {
         Main.getWindow().setScene(scene);
 
     }
-
+//error message function
     private void errorMessage(String message) {
         Stage errorStage = new Stage();
         Label errorMessage = new Label(message);
@@ -243,12 +236,12 @@ public class GUI {
         errorStage.setScene(errorScene);
         errorStage.show();
     }
-
+//menu scene
     public void prepareMenu() throws FileNotFoundException {
-        xml.getClient().getReserve().setNameOfCLient(xml.getClient().getName());
+        //drawing the scene
+        xml.getClient().getReservation().setNameOfCLient(xml.getClient().getName());
         Label menu = new Label("Menu");
         menu.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 30));
-
         Label maincourse = new Label("Main Course");
         maincourse.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 25));
         Label appetizers = new Label("Appetizers");
@@ -347,7 +340,25 @@ public class GUI {
         grid.add(logout, 4, 4);
         grid.add(exit, 4, 5);
         list.setFont(Font.font("ariel", 14));
-
+                GridPane.setHalignment(menu, HPos.CENTER);
+        GridPane.setHalignment(plus[0], HPos.CENTER);
+        GridPane.setHalignment(plus[1], HPos.CENTER);
+        GridPane.setHalignment(plus[2], HPos.CENTER);
+        GridPane.setHalignment(plus[3], HPos.CENTER);
+        GridPane.setHalignment(plus[4], HPos.CENTER);
+        GridPane.setHalignment(plus[5], HPos.CENTER);
+        GridPane.setHalignment(plus[6], HPos.CENTER);
+        GridPane.setHalignment(grilled, HPos.CENTER);
+        GridPane.setHalignment(steak, HPos.CENTER);
+        GridPane.setHalignment(mushroom, HPos.CENTER);
+        GridPane.setHalignment(fries, HPos.CENTER);
+        GridPane.setHalignment(salad, HPos.CENTER);
+        GridPane.setHalignment(molten, HPos.CENTER);
+        GridPane.setHalignment(pie, HPos.CENTER);
+        GridPane.setHalignment(proceed, HPos.CENTER);
+        grid.setHgap(15);
+        scene = new Scene(grid, 1400, 1000);
+//buttons events
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -365,11 +376,11 @@ public class GUI {
         proceed.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (xml.getClient().getReserve().getOrder().getTotalPrice() == 0) {
+                if (xml.getClient().getReservation().getOrder().getTotalPrice() == 0) {
                     errorMessage("No Order Entered");
                 } else {
                     try {
-                        xml.getR().addResevation(xml.getClient().getReserve());
+                        xml.getR().addResevation(xml.getClient().getReservation());
                     } catch (JAXBException ex) {
                         Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -392,7 +403,7 @@ public class GUI {
             public void handle(ActionEvent event) {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(0));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -405,7 +416,7 @@ public class GUI {
             public void handle(ActionEvent event) {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(6));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -418,7 +429,7 @@ public class GUI {
             public void handle(ActionEvent event) {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(5));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -432,7 +443,7 @@ public class GUI {
                 try {
 
                     xml.getClient().makeOrder(xml.getR().getDishes().get(2));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -445,7 +456,7 @@ public class GUI {
             public void handle(ActionEvent event) {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(1));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -458,7 +469,7 @@ public class GUI {
             public void handle(ActionEvent event) {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(4));
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -472,7 +483,7 @@ public class GUI {
                 try {
                     xml.getClient().makeOrder(xml.getR().getDishes().get(3));
 
-                    list.setText(logic.format(xml.getClient().getReserve().getOrder().printOrder()));
+                    list.setText(logic.format(xml.getClient().getReservation().getOrder().printOrder()));
 
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -481,34 +492,15 @@ public class GUI {
             }
         });
 
-        GridPane.setHalignment(menu, HPos.CENTER);
-        GridPane.setHalignment(plus[0], HPos.CENTER);
-        GridPane.setHalignment(plus[1], HPos.CENTER);
-        GridPane.setHalignment(plus[2], HPos.CENTER);
-        GridPane.setHalignment(plus[3], HPos.CENTER);
-        GridPane.setHalignment(plus[4], HPos.CENTER);
-        GridPane.setHalignment(plus[5], HPos.CENTER);
-        GridPane.setHalignment(plus[6], HPos.CENTER);
-        GridPane.setHalignment(grilled, HPos.CENTER);
-        GridPane.setHalignment(steak, HPos.CENTER);
-        GridPane.setHalignment(mushroom, HPos.CENTER);
-        GridPane.setHalignment(fries, HPos.CENTER);
-        GridPane.setHalignment(salad, HPos.CENTER);
-        GridPane.setHalignment(molten, HPos.CENTER);
-        GridPane.setHalignment(pie, HPos.CENTER);
-        GridPane.setHalignment(proceed, HPos.CENTER);
 
-        grid.setHgap(15);
-
-        scene = new Scene(grid, 1400, 1000);
 
         Main.getWindow().setScene(scene);
         Main.getWindow().setFullScreen(true);
 
     }
-
+//exiting scene for Client
     public void prepareThankYou() throws FileNotFoundException {
-
+//drawing the scene
         Text text = new Text("Thank you for visiting\nBon Appetit");
         text.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 30));
         Button logout = new Button("Log out");
@@ -522,16 +514,19 @@ public class GUI {
         grid.add(text, 1, 0);
         grid.add(logout, 0, 1);
         grid.add(exit, 2, 1);
-
         Image image = new Image(new FileInputStream("background.jpg"));
         BackgroundImage backgroundimage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-
         Background background = new Background(backgroundimage);
         grid.setBackground(background);
+        GridPane.setHalignment(logout, HPos.CENTER);
+        GridPane.setHalignment(exit, HPos.CENTER);
+        grid.setAlignment(Pos.CENTER);
+        scene = new Scene(grid, 430, 400);
+        //buttons events
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -548,13 +543,11 @@ public class GUI {
             }
         });
 
-        GridPane.setHalignment(logout, HPos.CENTER);
-        GridPane.setHalignment(exit, HPos.CENTER);
-        grid.setAlignment(Pos.CENTER);
-        scene = new Scene(grid, 430, 400);
+
         Main.getWindow().setScene(scene);
 
     }
+    //Waiter Scene
 
     public void prepareWaiter() throws JAXBException, FileNotFoundException {
 
@@ -622,11 +615,11 @@ public class GUI {
         Main.getWindow().setScene(scene);
 
     }
-
+//Cook Scene
     public void prepareCooker() throws JAXBException, FileNotFoundException {
 
         //widgets
-        Label label1 = new Label("Welcome Mr " + xml.getCooker().getName());
+        Label label1 = new Label("Welcome Chef " + xml.getCooker().getName());
         label1.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 22));
         label1.setAlignment(Pos.CENTER);
         Button exit = new Button("Exit");
@@ -661,10 +654,8 @@ public class GUI {
         GridPane.setHalignment(text, HPos.CENTER);
         GridPane.setHalignment(returnButton, HPos.CENTER);
         grid2.setAlignment(Pos.CENTER);
-
         grid.setBackground(background);
         grid2.setBackground(background);
-
         // setting up layouts
         grid2.add(text, 0, 0);
         grid2.add(ordersList, 0, 1);
@@ -687,15 +678,15 @@ public class GUI {
         Main.getWindow().setScene(scene);
 
     }
-
+//Manager Scene
     public void prepareManager() throws JAXBException, FileNotFoundException {
+        //drawing the scene
         Image image = new Image(new FileInputStream("background.jpg"));
         BackgroundImage backgroundimage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-
         Background background = new Background(backgroundimage);
         Label label1 = new Label("Welcome Mr " + xml.getManager().getName());
         label1.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 22));
@@ -739,7 +730,7 @@ public class GUI {
         GridPane.setHalignment(view1, HPos.CENTER);
         GridPane.setHalignment(label1, HPos.CENTER);
         GridPane.setHalignment(view2, HPos.CENTER);
-
+        
         grid2.add(back, 0, 1);
         grid2.add(reservations, 0, 0);
         GridPane.setHalignment(back, HPos.CENTER);
@@ -758,6 +749,7 @@ public class GUI {
         Scene scene3 = new Scene(grid3, 400, 400);
 
         Main.getWindow().setScene(scene);
+        //button events
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -834,7 +826,7 @@ public class GUI {
         grid.add(textfield3, 1, 3);
         grid.add(button1, 1, 4);
         grid.add(error, 1, 5);
-        grid.add(back,1,8);
+        grid.add(back, 1, 8);
         grid.setAlignment(Pos.CENTER);
         grid.setVgap(10);
         grid.setHgap(10);
@@ -844,44 +836,48 @@ public class GUI {
         GridPane.setHalignment(back, HPos.CENTER);
         Scene scene = new Scene(grid, 300, 300);
         Main.getWindow().setScene(scene);
-        
-        //scene 
+
+        //scene 2
         Text text2 = new Text("Thank you for registering");
         text2.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 24));
         text2.setTextAlignment(TextAlignment.CENTER);
-        Button backTo=new Button("Log in");
-        Button exit=new Button("Exit");
-        GridPane grid2=new GridPane();
-        grid2.add(text2,1,0);
-        grid2.add(backTo,1,1);
-        grid2.add(exit,1,1);
-        GridPane.setHalignment(backTo,HPos.LEFT);
-        GridPane.setHalignment(backTo,HPos.RIGHT);
+        Button backTo = new Button("Log in");
+        Button exit = new Button("Exit");
+        GridPane grid2 = new GridPane();
+        grid2.add(text2, 1, 0);
+        grid2.add(backTo, 1, 1);
+        grid2.add(exit, 1, 1);
+        GridPane.setHalignment(backTo, HPos.LEFT);
+        GridPane.setHalignment(backTo, HPos.RIGHT);
         grid2.setAlignment(Pos.CENTER);
-        Scene scene2=new Scene(grid2,400,300);
+        Scene scene2 = new Scene(grid2, 400, 300);
+        //buttons events
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               Main.getWindow().setScene(getScene());
-                
-            }});
+                Main.getWindow().setScene(getScene());
+
+            }
+        });
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               Main.getWindow().setScene(getScene());
-                
-            }});
+                Main.getWindow().setScene(getScene());
+
+            }
+        });
         exit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Main.getWindow().close();
-            }});
-        
+            }
+        });
+
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    if (textfield1.getText().length()==0 || textfield2.getText().length()==0 || textfield3.getText().length()==0) {
+                try {//validation
+                    if (textfield1.getText().length() == 0 || textfield2.getText().length() == 0 || textfield3.getText().length() == 0) {
                         errorMessage("Enter Required Fields");
 
                     } else if (!logic.checkName(textfield1.getText())) {
@@ -902,13 +898,14 @@ public class GUI {
                         xml.getR().addClient(textfield1.getText(), textfield2.getText(), textfield3.getText());
                         xml.write();
                         Main.getWindow().setScene(scene2);
-                        
+
                     }
                 } catch (JAXBException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-            }});
+
+            }
+        });
 
     }
 }
