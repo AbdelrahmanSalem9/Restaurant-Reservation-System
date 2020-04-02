@@ -819,6 +819,7 @@ public class GUI {
         Label label3 = new Label("Password:");
         label3.setFont(Font.font("ariel", 12));
         Button button1 = new Button("Sign up");
+        Button back = new Button("Back");
         button1.setFont(Font.font("ariel", 12));
         TextField textfield1 = new TextField();
         TextField textfield2 = new TextField();
@@ -833,12 +834,14 @@ public class GUI {
         grid.add(textfield3, 1, 3);
         grid.add(button1, 1, 4);
         grid.add(error, 1, 5);
+        grid.add(back,1,8);
         grid.setAlignment(Pos.CENTER);
         grid.setVgap(10);
         grid.setHgap(10);
         GridPane.setHalignment(text, HPos.CENTER);
         GridPane.setHalignment(button1, HPos.CENTER);
         GridPane.setHalignment(error, HPos.CENTER);
+        GridPane.setHalignment(back, HPos.CENTER);
         Scene scene = new Scene(grid, 300, 300);
         Main.getWindow().setScene(scene);
         
@@ -856,6 +859,12 @@ public class GUI {
         GridPane.setHalignment(backTo,HPos.RIGHT);
         grid2.setAlignment(Pos.CENTER);
         Scene scene2=new Scene(grid2,400,300);
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               Main.getWindow().setScene(getScene());
+                
+            }});
         backTo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
