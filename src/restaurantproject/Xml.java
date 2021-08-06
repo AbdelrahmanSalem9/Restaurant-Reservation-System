@@ -12,10 +12,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-/**
- *
- * @author MIX
- */
+
 //this class is for reading and writing data in the xml file
 public class Xml {
 
@@ -104,9 +101,9 @@ public class Xml {
     }
 
     public void write() throws JAXBException {
-        JAXBContext jaxbcontext = JAXBContext.newInstance(Restaurant.class);
-        Marshaller marshaller = jaxbcontext.createMarshaller();
-        marshaller.marshal(this.r, new File("input.xml"));
+    	  JAXBContext jaxbcontext = JAXBContext.newInstance(Restaurant.class);
+          Marshaller marshaller = jaxbcontext.createMarshaller();
+          marshaller.marshal(this.r, new File("input.xml"));
 
     }
 
